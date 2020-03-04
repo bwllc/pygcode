@@ -24,16 +24,17 @@ REGEX_POSITIVEINT = re.compile(r'^\s*\d+')
 REGEX_CODE = re.compile(r'^\s*\d+(\.\d)?') # float, but can't be negative
 
 # Value cleaning functions
-# CHANGES JJL2 2020-03-03: changed all %g to %f, and changed rounding to 6 decimal places.
+# CHANGES JJL2 2020-03-03: changing SOME %g to %f, (some things break 
+# if they are all changed) and changed rounding to 6 decimal places.
 def _clean_codestr(value):
     if value < 10:
-        return "0%f" % value
-    return "%f" % value
+        return "0%g" % value
+    return "%g" % value
 
 CLEAN_NONE = lambda v: v
 CLEAN_FLOAT = lambda v: "{0:f}".format(round(v, 6))
 CLEAN_CODE = _clean_codestr
-CLEAN_INT = lambda v: "%f" % v
+CLEAN_INT = lambda v: "%g" % v
 # END CHANGES JJL2 2020-03-03
 
 WORD_MAP = {
